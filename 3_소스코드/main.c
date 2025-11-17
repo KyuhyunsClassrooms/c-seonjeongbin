@@ -1,36 +1,49 @@
 #include <stdio.h>
 
 /*
-    1. [설계]에서 정의한 변수, 배열, (필요하면) 구조체를 여기에 선언하세요.
-    
-    예시 - 배열 사용:
-    char names[100][20];
-    int scores[100];
-    int count = 0;
-    
-    예시 - 구조체 사용 (선택):
-    struct Student {
-        char name[20];
-        int score;
-    };
-    struct Student students[100];
-*/
+    #include <stdio.h>
+#include <string.h>
 
+struct Student {
+    char name[20];
+    int kor, eng, math, total;
+};
 
-/*
-    2. [알고리즘]에서 설계한 핵심 기능 함수들을 여기에 선언하세요.
-*/
+struct Student s[100];
+int cnt = 0;
 
+void add() {
+    if (cnt >= 100) { printf("가득 찼습니다.\n"); return; }
+
+    printf("이름: "); scanf("%s", s[cnt].name);
+    printf("국어 영어 수학: ");
+    scanf("%d %d %d", &s[cnt].kor, &s[cnt].eng, &s[cnt].math);
+
+    s[cnt].total = s[cnt].kor + s[cnt].eng + s[cnt].math;
+    cnt++;
+}
+
+void search() {
+    char name[20];
+    printf("검색 이름: "); scanf("%s", name);
+
+    for (int i = 0; i < cnt; i++) {
+        if (!strcmp(s[i].name, name)) {
+            printf("%s / 국:%d 영:%d 수:%d 총:%d\n",
+                s[i].name, s[i].kor, s[i].eng, s[i].math, s[i].total);
+            return;
+        }
+    }
+    printf("없음\n");
+}
 
 int main() {
-    
-    printf("--- C언어 미니 프로젝트 시작! ---\n");
-
-    /*
-        3. [알고리즘]에서 설계한 main 함수의 흐름을
-           여기에 C언어로 자유롭게 구현하세요.
-    */
-    
-    
-    return 0;
+    int m;
+    while (1) {
+        printf("1.등록 2.검색 0.종료: ");
+        scanf("%d", &m);
+        if (m == 1) add();
+        else if (m == 2) search();
+        else if (m == 0) break;
+    }
 }
